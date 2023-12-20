@@ -22,12 +22,14 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce;
     private bool rdyToJump;
 
+
+    public Texture2D cursor;
     
     
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+
+
 
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
@@ -37,6 +39,8 @@ public class PlayerMovement : MonoBehaviour
  
     void FixedUpdate()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = true;
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight, Ground);
         
         Movement();

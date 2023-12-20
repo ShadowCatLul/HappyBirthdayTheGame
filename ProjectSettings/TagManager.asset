@@ -7,6 +7,8 @@ TagManager:
   - ground
   - Pickable
   - Interactable
+  - Obstacle
+  - Score
   layers:
   - Default
   - TransparentFX
