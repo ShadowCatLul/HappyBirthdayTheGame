@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -10,8 +11,9 @@ public class GameManager : MonoBehaviour, IInteractable
     private int score=0;
     public TextMeshPro text;
     public GameObject bird;
-    public GameObject pipeSpawner;
-    private bool gameStarted;
+    public FlappyBird birdClass;
+    public PipeSpawner pipeSpawner;
+    private bool gameStarted = false;
     public void GameOver()
     {
         Debug.Log("Bird F");
@@ -21,22 +23,35 @@ public class GameManager : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        gameStarted = true;
+        if (gameStarted == true)
+        {
+            birdClass.Move(); 
+        }
+        else
+        {
+            gameStarted = true;
+            pipeSpawner.enabled = true;
+        }
+    }
+
+    public void Start()
+    {
+        birdClass = GetComponent<FlappyBird>();
+        pipeSpawner = GetComponent<PipeSpawner>();
+        gameStarted = false;
     }
 
     public void FixedUpdate()
     {
-        if (gameStarted)
+        if (!gameStarted)
         {
             score = 0;
             text.text = score.ToString();
             bird.transform.position = new Vector3(3, 0, 2);
-            gameStarted = false;
+            pipeSpawner.enabled = false;
         }
-        else
-        {
-            //Invoke(nameof(bird.GetComponentsInChildren<Move>()),1);
-        }
+
+
     }
 
 

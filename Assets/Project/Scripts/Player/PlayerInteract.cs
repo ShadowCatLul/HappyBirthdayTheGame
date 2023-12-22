@@ -13,17 +13,18 @@ public class PlayerInteract : MonoBehaviour
 
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
-        Invoke(nameof(Interact),1);
+        Interact();
     }
 
     private void Interact()
     {
-        if (Input.GetKey(KeyCode.F))
+        Debug.DrawRay(cam.transform.position, cam.transform.forward * InteractorRange*Time.deltaTime, Color.blue);
+        if (Input.GetKeyDown(KeyCode.F))
         {
-            Ray r = new Ray(cam.transform.position, cam.transform.forward * InteractorRange);
-            Debug.DrawRay(cam.transform.position, cam.transform.forward * InteractorRange, Color.blue);
+            Ray r = new Ray(cam.transform.position, cam.transform.forward * InteractorRange*Time.deltaTime);
+            Debug.DrawRay(cam.transform.position, cam.transform.forward * InteractorRange*Time.deltaTime, Color.green);
             if (Physics.Raycast(r, out RaycastHit hitInfo, InteractorRange))
             {
                 if (hitInfo.collider.gameObject.TryGetComponent(out IInteractable interactObj))

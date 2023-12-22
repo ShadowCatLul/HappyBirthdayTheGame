@@ -19,7 +19,6 @@ public class FlappyBird : MonoBehaviour
 
     public void Move()
     {
-        if (Input.GetKey(KeyCode.E))
             rb.velocity = Vector2.up * velocity;
     }
 

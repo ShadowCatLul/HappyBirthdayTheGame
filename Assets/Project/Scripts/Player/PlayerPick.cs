@@ -27,13 +27,13 @@ public class PlayerPick : MonoBehaviour
         LayerNumber = LayerMask.NameToLayer("Holding");
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (heldObj == null)
             if (Input.GetKey(KeyCode.E))
             {
-                Ray r = new Ray(cam.transform.position, cam.transform.forward * pickUpRange);
-                Debug.DrawRay(cam.transform.position, cam.transform.forward * pickUpRange, Color.blue);
+                Ray r = new Ray(cam.transform.position, cam.transform.forward * pickUpRange*Time.deltaTime);
+                Debug.DrawRay(cam.transform.position, cam.transform.forward * pickUpRange*Time.deltaTime, Color.blue);
                 Debug.Log(heldObj);
 
                     if (Physics.Raycast(r, out RaycastHit hitInfo, pickUpRange))
