@@ -9,6 +9,7 @@ TagManager:
   - Interactable
   - Obstacle
   - Score
+  - pipe
   layers:
   - Default
   - TransparentFX

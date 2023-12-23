@@ -8,18 +8,21 @@ using UnityEngine;
 public class FlappyBird : MonoBehaviour
 {
 
-    public float velocity = 1;
+    public float velocity = 3;
     private Rigidbody2D rb;
 
 
-    private void Start()
+    public void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        rb.isKinematic = true;
+        rb.Sleep();
     }
 
     public void Move()
     {
-            rb.velocity = Vector2.up * velocity;
+        rb.isKinematic = false;
+        rb.velocity = Vector2.up * velocity*100*Time.deltaTime;
     }
 
     private void OnTriggerEnter2D(Collider2D other)

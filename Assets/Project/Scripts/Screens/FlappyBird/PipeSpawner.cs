@@ -8,7 +8,7 @@ public class PipeSpawner : MonoBehaviour
    
     public float spawnrate=1f;
     public GameObject pref;
-
+    public PipeSpawner pipeSpawned;
     
     private void OnEnable()
     {
@@ -18,12 +18,18 @@ public class PipeSpawner : MonoBehaviour
     private void OnDisable()
     {
         CancelInvoke(nameof(Spawn));
+        Object[] allObjects= GameObject.FindGameObjectsWithTag("pipe");
+        foreach (Object obj in allObjects)
+        {
+                Destroy(obj);
+        }
     }
 
     private void Spawn()
     {
         
         GameObject pipe = Instantiate(pref, transform.position, Quaternion.identity);
+        pipe.tag="pipe";
         pipe.transform.position -= Vector3.up*spawnrate*Random.Range(-height, height);
     }
 }

@@ -2,55 +2,59 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Burst;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour, IInteractable
+public class GameManager : MonoBehaviour
 {
     private int score=0;
     public TextMeshPro text;
     public GameObject bird;
     public FlappyBird birdClass;
     public PipeSpawner pipeSpawner;
+    private Rigidbody2D birdRB;
     private bool gameStarted = false;
     public void GameOver()
     {
         Debug.Log("Bird F");
-        gameStarted = false;
+        Start();
 
     }
-
-    public void Interact()
+    
+    public void Start()
     {
+        birdClass = GetComponentInChildren<FlappyBird>();
+        pipeSpawner = GetComponentInChildren<PipeSpawner>();
+        birdRB = bird.GetComponent<Rigidbody2D>();
+        gameStarted = false;
+        birdRB.Sleep();
+        pipeSpawner.enabled = false;
+        birdClass.Start();
+        bird.transform.position= bird.transform.parent.position + new Vector3(3, 1, 2);
+        
+    }
+
+    public void Update()
+    {
+
         if (gameStarted == true)
         {
-            birdClass.Move(); 
+
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                birdClass.Move();
+                pipeSpawner.enabled = true;
+                birdClass.enabled = true;
+            }
         }
         else
         {
-            gameStarted = true;
-            pipeSpawner.enabled = true;
-        }
-    }
-
-    public void Start()
-    {
-        birdClass = GetComponent<FlappyBird>();
-        pipeSpawner = GetComponent<PipeSpawner>();
-        gameStarted = false;
-    }
-
-    public void FixedUpdate()
-    {
-        if (!gameStarted)
-        {
             score = 0;
             text.text = score.ToString();
-            bird.transform.position = new Vector3(3, 0, 2);
-            pipeSpawner.enabled = false;
+            gameStarted = true;
         }
-
 
     }
 
@@ -59,5 +63,7 @@ public class GameManager : MonoBehaviour, IInteractable
     {
         score++;
         text.text = score.ToString();
+        
+        
     }
 }

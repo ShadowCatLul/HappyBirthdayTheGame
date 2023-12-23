@@ -8,7 +8,6 @@ using UnityEngine;
 
 public class PlayerPick : MonoBehaviour
 {
-    
 
     public Camera cam;
 
@@ -17,7 +16,7 @@ public class PlayerPick : MonoBehaviour
     private Rigidbody heldObjRb;
 
     public Transform holdPos;
-    private float rotationSensitivity = 1f;
+    
     public float pickUpRange;
     
     public float throwForce = 500f;
@@ -49,14 +48,14 @@ public class PlayerPick : MonoBehaviour
 
         if (heldObj != null) 
         {
-
+            MoveObject(); 
             
             if (Input.GetKeyDown(KeyCode.Mouse0)) 
             { 
                
                 ThrowObject();
             }
-            MoveObject(); 
+            
         }
         
     }
@@ -69,8 +68,6 @@ public class PlayerPick : MonoBehaviour
             heldObjRb.isKinematic = true;
             heldObjRb.transform.parent = holdPos.transform; 
             heldObj.layer = LayerNumber; 
-            
-           
 
         }
     }
@@ -78,13 +75,11 @@ public class PlayerPick : MonoBehaviour
     void MoveObject()
     {
         //keep object position the same as the holdPosition position
-        heldObj.transform.position =holdPos.transform.position;
+        heldObj.transform.position = holdPos.transform.position;
     }
 
     void ThrowObject()
     {
-
-       
         heldObj.layer = 0;
         heldObjRb.isKinematic = false; 
         heldObj.transform.parent = null;
